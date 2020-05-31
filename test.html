@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Getting Started</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function () {
+        $('#crawl').click(function (e) {
+          e.preventDefault();
+
+          // Get
+          let domain = $('#domain').val();
+          let depth = $('#depth').val();
+          let simultaneous = $('#simultaneous').val();
+          let max = $('#max').val();
+
+          if (domain == 'https://') {
+            alert('Enter a valid domain');
+            return;
+          }
+
+          $('#crawl').prop('disabled', true);
+          $('.d-none').removeClass('d-none');
+
+          window.Crawl.init(domain, depth, simultaneous, max);
+        });
+
+        $('#download').click(function (e) {
+          e.preventDefault();
+          //window.json2csv(window.CrawlJson, 'ninjaseo.csv', true, true);
+          window.Crawl.downloadCSV();
+        });
+      });
+    </script>
+
+    <style>
+      .parsing {
+        border-radius: 0.5em;
+        outline: rgb(205, 220, 57) dashed 2px;
+      }
+      .queued {
+        border-radius: 0.5em;
+        outline: rgb(57, 133, 220) dashed 2px;
+      }
+      .completed {
+        border-radius: 0.5em;
+        background-color: rgb(195, 243, 191);
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="main.js"></script>
+
+    <div class="container">
+      <div class="p-5">
+        <br />
+        <h2 class="py-4">NinjaSEO</h2>
+        <form action="" name="registration">
+          <div class="form-group">
+            <label for="domain">Domain</label>
+            <input type="text" class="form-control" name="domain" id="domain" value="https://" />
+          </div>
+
+          <div class="form-group">
+            <label for="depth">Depth</label>
+            <input type="text" class="form-control" name="depth" id="depth" value="2" />
+          </div>
+
+          <div class="form-group">
+            <label for="simultaneous">Simultaneous Downloads</label>
+            <input type="text" class="form-control" name="simultaneous" id="simultaneous" value="4" />
+          </div>
+
+          <div class="form-group">
+            <label for="max">Max Downloads</label>
+            <input type="text" class="form-control" name="max" id="max" value="50" />
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="crawl">Crawl</button>
+        </form>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="container p-5">
+      <a href="" id="download">Download</a>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="container d-none">
+      <div class="card-columns">
+        <div class="card bg-light">
+          <div class="card-body text-center">
+            <h5 class="card-title">Internal</h5>
+            <p class="card-text" id="internal"></p>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body text-center">
+            <h5 class="card-title">External</h5>
+            <p class="card-text" id="external"></p>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body text-center">
+            <h5 class="card-title">Completed</h5>
+            <p class="card-text completed" id="completed"></p>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body text-center">
+            <h5 class="card-title">Parsing</h5>
+            <p class="card-text parsing" id="parsing"></p>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body text-center">
+            <h5 class="card-title">Queued</h5>
+            <p class="card-text queued" id="queued"></p>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body text-center">
+            <h5 class="card-title">Blocked</h5>
+            <p class="card-text blocked" id="blocked"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-none p-5">
+      <h4>Internal Links</h4>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">URL</th>
+            <th scope="col">Status</th>
+            <th scope="col">Depth</th>
+            <th scope="col">Data</th>
+          </tr>
+        </thead>
+        <tbody id="internal-urls"></tbody>
+      </table>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="container d-none p-5">
+      <h4>External Links</h4>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">URL</th>
+          </tr>
+        </thead>
+        <tbody id="external-urls"></tbody>
+      </table>
+    </div>
+  </body>
+</html>
