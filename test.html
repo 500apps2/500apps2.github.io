@@ -11,6 +11,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script>
       $(document).ready(function () {
+        // Set the html
+        //window.extension = 'ochlemnhibhdakbgfbcoikhpmgodioao';
         $('#crawl').click(function (e) {
           e.preventDefault();
 
@@ -70,17 +72,17 @@
 
           <div class="form-group">
             <label for="depth">Depth</label>
-            <input type="text" class="form-control" name="depth" id="depth" value="2" />
+            <input type="text" class="form-control" name="depth" id="depth" value="10" />
           </div>
 
           <div class="form-group">
             <label for="simultaneous">Simultaneous Downloads</label>
-            <input type="text" class="form-control" name="simultaneous" id="simultaneous" value="4" />
+            <input type="text" class="form-control" name="simultaneous" id="simultaneous" value="12" />
           </div>
 
           <div class="form-group">
             <label for="max">Max Downloads</label>
-            <input type="text" class="form-control" name="max" id="max" value="50" />
+            <input type="text" class="form-control" name="max" id="max" value="500" />
           </div>
 
           <button type="submit" class="btn btn-primary" id="crawl">Crawl</button>
