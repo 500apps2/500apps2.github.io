@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Getting Started</title>
+    <title>NinjaSEO - Ninja your site</title>
     <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
 
@@ -30,6 +30,9 @@
           $('#crawl').prop('disabled', true);
           $('.d-none').removeClass('d-none');
 
+          // Store in UI
+          window.NinjaSEO_UI.save({ domain: domain, depth: depth, simultaneous: simultaneous, max: max });
+
           window.Crawl.init(domain, depth, simultaneous, max);
         });
 
@@ -38,6 +41,9 @@
           //window.json2csv(window.CrawlJson, 'ninjaseo.csv', true, true);
           window.Crawl.downloadCSV();
         });
+
+        // Preset old values
+        window.NinjaSEO_UI.load();
       });
     </script>
 
